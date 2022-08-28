@@ -42,9 +42,9 @@ def escrever_no_arquivo_csv(nome_do_arquivo, data):
 
 def pegar_dados():
     arquivos = {
-        "alunos": "./dados/Base de Alunos6.csv",
-        "dengue": "./dados/Base de Dengue6.csv",
-        "onibus": "./dados/Base de Onibus6.csv"
+        "alunos": "./Base de Alunos6.csv",
+        "dengue": "./Base de Dengue6.csv",
+        "onibus": "./Base de Onibus6.csv"
     }
 
     BANCO_DE_DADOS["alunos"] = ler_arquivo_csv(arquivos["alunos"], "alunos")
