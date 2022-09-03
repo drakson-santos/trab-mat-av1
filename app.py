@@ -1,6 +1,6 @@
 from manipulador_de_arquivo import buscar_dados, escrever_no_arquivo_csv, pegar_dados
 
-
+print(0)
 BANCO_DE_DADOS, BANCO_DE_DADOS_IDS = pegar_dados()
 
 
