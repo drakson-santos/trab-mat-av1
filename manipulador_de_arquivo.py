@@ -7,6 +7,7 @@ BANCO_DE_DADOS = {
 }
 
 BANCO_DE_DADOS_IDS = {
+    "universo": set(),
     "alunos": set(),
     "dengue": set(),
     "onibus": set(),
@@ -18,6 +19,7 @@ def montar_id(nome):
 
 def ler_arquivo_csv(nome_do_arquivo, conjunto):
     data = []
+    ids_adicionados = []
     with open(nome_do_arquivo, 'r') as arquivo_csv:
         reader = csv.reader(arquivo_csv, delimiter=';')
         linha = 0
@@ -26,25 +28,42 @@ def ler_arquivo_csv(nome_do_arquivo, conjunto):
                 linha += 1
             else:
                 row[0] = montar_id(row[1])
-                data.append(row)
-                BANCO_DE_DADOS_IDS[conjunto].add(row[0])
-        return data
+                id_pessoa =  row[0]
+                if id_pessoa not in ids_adicionados:
+                    ids_adicionados.append(id_pessoa)
+                    data.append(row)
 
-def escrever_no_arquivo_csv(nome_do_arquivo, data):
+                    BANCO_DE_DADOS_IDS[conjunto].add(id_pessoa)
+                    BANCO_DE_DADOS_IDS["universo"].add(id_pessoa)
+
+
+    return data
+
+def escrever_no_arquivo_csv(
+    nome_do_arquivo,
+    dados = {
+        "questao": "",
+        "dados": []
+    }
+):
     f = open(f"{nome_do_arquivo}.csv", 'w', newline='', encoding='utf-8')
     w = csv.writer(f, delimiter=';')
 
-    for row in data:
-        print(row)
+    for row in dados["dados"]:
         w.writerow(row)
     f.close()
 
+    f = open(f"resultados.csv", 'a', newline='', encoding='utf-8')
+    w = csv.writer(f, delimiter=';')
+    resultado = dados["questao"], len(dados["dados"])
+    w.writerow(resultado)
+    f.close()
 
 def pegar_dados():
     arquivos = {
-        "alunos": "./Base de Alunos6.csv",
-        "dengue": "./Base de Dengue6.csv",
-        "onibus": "./Base de Onibus6.csv"
+        "alunos": "./Base de Alunos5.csv",
+        "dengue": "./Base de Dengue5.csv",
+        "onibus": "./Base de Onibus5.csv"
     }
 
     BANCO_DE_DADOS["alunos"] = ler_arquivo_csv(arquivos["alunos"], "alunos")
@@ -61,4 +80,5 @@ def buscar_dados(ids, nome_do_banco_de_dados):
         id = pessoa[0]
         if id in ids:
             dados.append(pessoa)
+
     return dados
