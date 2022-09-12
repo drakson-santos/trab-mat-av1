@@ -4,9 +4,10 @@ BANCO_DE_DADOS, BANCO_DE_DADOS_IDS = pegar_dados()
 
 
 def show(con, con_2=[]):
-    print(len(con))
-    if con_2:
-        print(len(con_2))
+    pass
+    # print(len(con))
+    # if con_2:
+    #     print(len(con_2))
 
 
 def pegar_relatorio_educacao():
@@ -104,18 +105,38 @@ def pegar_relatorio_saude_e_mobilidade():
 
 pegar_relatorio_saude_e_mobilidade()
 
+def juntar_dados(lista_principal, lista_secundaria, colunas = []):
+    dados = []
+
+    for principal in lista_principal:
+        id_principal = principal[0]
+
+        dados_da_pessoa: list = principal
+
+        for secundaria in lista_secundaria:
+            id_secundaria = secundaria[0]
+
+            if id_principal == id_secundaria:
+                for coluna in colunas:
+                    dados_da_pessoa.append(secundaria[coluna])
+
+        dados.append(dados_da_pessoa)
+
+    return dados
 
 def pegar_relatorio_saude_mobilidade_e_educacao():
     # 7) Relatório Saúde, Mobilidade e Educação: Informar nome, data de nascimento, data que tiveram dengue e linhas de ônibus  dos cidadãos de XPTO que frequentaram o posto de saúde, utilizaram transporte público e frequentaram a escola.
     resultado_ids = BANCO_DE_DADOS_IDS["dengue"] & BANCO_DE_DADOS_IDS["onibus"] & BANCO_DE_DADOS_IDS["alunos"]
 
-    dados = buscar_dados(resultado_ids, "dengue")
+    dados_dengue = buscar_dados(resultado_ids, "dengue")
+    dados_onibus = buscar_dados(resultado_ids, "onibus")
+
+    # ID;Nome;Nome da Mae;Nome do Pai;Sexo;Data de Nascimento;�nibus
+    colunas = [6] # onibus
     escrever_no_arquivo_csv("relatorio_saude_mobilidade_e_educacao", {
         "questao": "7) Relatório Saúde, Mobilidade e Educação: Informar nome, data de nascimento, data que tiveram dengue e linhas de ônibus  dos cidadãos de XPTO que frequentaram o posto de saúde, utilizaram transporte público e frequentaram a escola.",
-        "dados": dados
+        "dados": juntar_dados(dados_dengue, dados_onibus, colunas)
     })
-
-    show(dados)
 
 
 pegar_relatorio_saude_mobilidade_e_educacao()

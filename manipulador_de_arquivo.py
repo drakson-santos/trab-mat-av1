@@ -36,7 +36,6 @@ def ler_arquivo_csv(nome_do_arquivo, conjunto):
                     BANCO_DE_DADOS_IDS[conjunto].add(id_pessoa)
                     BANCO_DE_DADOS_IDS["universo"].add(id_pessoa)
 
-
     return data
 
 def escrever_no_arquivo_csv(
