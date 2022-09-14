@@ -42,21 +42,23 @@ def escrever_no_arquivo_csv(
     nome_do_arquivo,
     dados = {
         "questao": "",
-        "dados": []
+        "dados": [],
+        "colunas": "",
     }
 ):
     f = open(f"{nome_do_arquivo}.csv", 'w', newline='', encoding='utf-8')
     w = csv.writer(f, delimiter=';')
 
+    w.writerow(dados["colunas"])
     for row in dados["dados"]:
         w.writerow(row)
     f.close()
 
-    f = open(f"resultados.csv", 'a', newline='', encoding='utf-8')
-    w = csv.writer(f, delimiter=';')
-    resultado = dados["questao"], len(dados["dados"])
-    w.writerow(resultado)
-    f.close()
+    # f = open(f"resultados.csv", 'a', newline='', encoding='utf-8')
+    # w = csv.writer(f, delimiter=';')
+    # resultado = dados["questao"], len(dados["dados"])
+    # w.writerow(resultado)
+    # f.close()
 
 def pegar_dados():
     arquivos = {
