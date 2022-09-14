@@ -26,7 +26,7 @@ def pegar_relatorio_educacao():
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento"]
 
     resultado_ids = CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["dengue"]
-    dados = pegar_dados_da_pessoas("alunos", resultado_ids, colunas_solicitadas)
+    dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
 
     salvar_dados_em_um_novo_arquivo(
         "relatorio_educacao",

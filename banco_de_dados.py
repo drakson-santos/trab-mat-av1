@@ -90,28 +90,19 @@ def montar_conjunto_universo(
             conjunto_universo.append(aluno)
             ids_adicionados.add(aluno["ID"])
 
-    for elemento in conjunto_onibus:
-        if elemento["ID"] not in ids_adicionados:
-            conjunto_universo.append(elemento)
-            ids_adicionados.add(elemento["ID"])
-        else:
-            for adicionado_no_universo in conjunto_universo:
-                if adicionado_no_universo["ID"] == elemento["ID"]:
-                    for coluna in todas_as_colunas:
-                        if elemento.get(coluna):
-                            adicionado_no_universo[coluna] = elemento[coluna]
-
-    for elemento in conjunto_dengue:
-        if elemento["ID"] not in ids_adicionados:
-            conjunto_universo.append(elemento)
-            ids_adicionados.add(elemento["ID"])
-        else:
-            for adicionado_no_universo in conjunto_universo:
-                if adicionado_no_universo["ID"] == elemento["ID"]:
-                    for coluna in todas_as_colunas:
-                        if elemento.get(coluna):
-                            adicionado_no_universo[coluna] = elemento[coluna]
-
+    def add_conjunto_universo(conjunto):
+        for elemento in conjunto:
+            if elemento["ID"] not in ids_adicionados:
+                conjunto_universo.append(elemento)
+                ids_adicionados.add(elemento["ID"])
+            else:
+                for adicionado_no_universo in conjunto_universo:
+                    if adicionado_no_universo["ID"] == elemento["ID"]:
+                        for coluna in todas_as_colunas:
+                            if elemento.get(coluna):
+                                adicionado_no_universo[coluna] = elemento[coluna]
+    add_conjunto_universo(conjunto_onibus)
+    add_conjunto_universo(conjunto_dengue)
     return conjunto_universo
 
 def pegar_banco_de_dados():
