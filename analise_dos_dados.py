@@ -103,12 +103,11 @@ def pegar_relatorio_educacao_e_mobilidade():
 def pegar_relatorio_saude_e_mobilidade():
     # # 6) Relatório Saúde e Mobilidade: Informar nome, data de nascimento, data que tiveram dengue e
     # linhas de ônibus dos cidadãos de XPTO que frequentaram o posto de saúde e utilizaram transporte público.
-
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue", "Ônibus"]
 
-    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["alunos"]
-    dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
+    resultado_ids =  CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"]
 
+    dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
         "relatorio_saude_e_mobilidade",
         colunas_solicitadas,
@@ -121,7 +120,6 @@ def pegar_relatorio_saude_mobilidade_e_educacao():
     # 7) Relatório Saúde, Mobilidade e Educação: Informar nome, data de nascimento, data que
     # tiveram dengue e linhas de ônibus  dos cidadãos de XPTO que frequentaram o posto de saúde,
     # utilizaram transporte público e frequentaram a escola.
-    # colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue", "onibus"]
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue", "Ônibus"]
 
     resultado_ids = CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["alunos"]
@@ -131,6 +129,8 @@ def pegar_relatorio_saude_mobilidade_e_educacao():
         colunas_solicitadas,
         dados
     )
+
+    return len(dados)
 
 def pegar_relatorio_saude_n_mobilidade():
     # 8) Informar nome, data de nascimento, data que tiveram dengue dos cidadãos de XPTO que
@@ -177,16 +177,3 @@ def pegar_relatorio_saude_n_educacao_n_mobilidade():
     )
 
     return len(dados)
-
-
-pegar_relatorio_educacao()
-pegar_relatorio_saude()
-pegar_relatorio_mobilidade()
-pegar_relatorio_educacao_e_saude()
-pegar_relatorio_educacao_e_mobilidade()
-pegar_relatorio_saude_e_mobilidade()
-pegar_relatorio_saude_mobilidade_e_educacao()
-pegar_relatorio_saude_n_mobilidade()
-pegar_relatorio_saude_n_educacao()
-pegar_relatorio_saude_n_educacao_n_mobilidade()
-

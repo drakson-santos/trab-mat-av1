@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 from itertools import chain
 
 def montar_id(nome):
@@ -37,6 +38,13 @@ def pegar_dados_do_arquivo_csv(caminho_do_arquivo):
         linhas = csv.reader(arquivo_csv, delimiter=';')
         dados = montar_tabela(linhas)
         return dados
+
+def salvar_resultados_em_um_novo_arquivo(questao, resultado):
+    f = open(f"resultados.csv", 'a+', newline='', encoding='utf-8')
+    w = csv.writer(f, delimiter=';')
+
+    w.writerow([questao, resultado])
+    f.close()
 
 def salvar_dados_em_um_novo_arquivo(
     nome_do_arquivo,
@@ -107,9 +115,9 @@ def montar_conjunto_universo(
 
 def pegar_banco_de_dados():
     arquivos = {
-        "alunos": "./Base de Alunos5.csv",
-        "dengue": "./Base de Dengue5.csv",
-        "onibus": "./Base de Onibus5.csv"
+        "alunos": "./bases/Base de Alunos5.csv",
+        "dengue": "./bases/Base de Dengue5.csv",
+        "onibus": "./bases/Base de Onibus5.csv"
     }
 
     banco_alunos = pegar_dados_do_arquivo_csv(arquivos["alunos"])
@@ -131,11 +139,13 @@ def pegar_dados():
         "alunos": set(),
         "dengue": set(),
         "onibus": set(),
+        "universo": set(),
     }
 
     for nome_do_banco in NOME_DOS_BANCOS:
         dados = BANCO_DE_DADOS[nome_do_banco]
         for pessoa in dados:
             CONJUNTO_DOS_IDS[nome_do_banco].add(pessoa["ID"])
+            CONJUNTO_DOS_IDS["universo"].add(pessoa["ID"])
 
     return CONJUNTO_DOS_IDS, BANCO_DE_DADOS
