@@ -4,10 +4,9 @@ BANCO_DE_DADOS, BANCO_DE_DADOS_IDS = pegar_dados()
 
 
 def show(con, con_2=[]):
-    pass
-    # print(len(con))
-    # if con_2:
-    #     print(len(con_2))
+    print(len(con))
+    if con_2:
+        print(len(con_2))
 
 
 def pegar_relatorio_educacao():
