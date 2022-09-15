@@ -19,7 +19,6 @@ def pegar_dados_da_pessoas(nome_do_conjunto, ids, colunas=[]):
         dados.append(elemento)
     return dados
 
-
 def pegar_relatorio_educacao():
     # 1) Relatório Educação: Informar nome, data de nascimento e id dos cidadãos de XPTO que
     # frequentaram a escola, menos os cidadãos que tiveram dengue.
@@ -34,7 +33,15 @@ def pegar_relatorio_educacao():
         dados
     )
 
-    return len(dados)
+    conA = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"])
+    interAD = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["alunos"])
+
+    return {
+        "Conjunto alunos": conA,
+        "Conjunto dengue": conD,
+        "Conjunto inter": interAD,
+    }
 
 def pegar_relatorio_saude():
     # 2) Relatório Saúde: Informar nome, data de nascimento e data que tiveram dengue dos cidadãos
@@ -50,7 +57,15 @@ def pegar_relatorio_saude():
         dados
     )
 
-    return len(dados)
+    conD = len(resultado_ids)
+    conO = len(CONJUNTOS_DOS_IDS["onibus"] - CONJUNTOS_DOS_IDS["dengue"])
+    interDO = len(CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["dengue"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_mobilidade():
     # 3) Relatório Mobilidade: Informar nome, data de nascimento e linhas de ônibus dos cidadãos de

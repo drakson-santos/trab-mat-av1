@@ -39,11 +39,23 @@ def pegar_dados_do_arquivo_csv(caminho_do_arquivo):
         dados = montar_tabela(linhas)
         return dados
 
-def salvar_resultados_em_um_novo_arquivo(questao, resultado):
+def salvar_resultados_em_um_novo_arquivo(questao, resultado, eh_o_primeiro=False):
     f = open(f"resultados.csv", 'a+', newline='', encoding='utf-8')
     w = csv.writer(f, delimiter=';')
 
-    w.writerow([questao, resultado])
+    colunas = []
+    if eh_o_primeiro:
+        colunas.append("Questao")
+
+    resultados = [questao]
+    for conjunto in resultado.keys():
+        colunas.append(conjunto)
+        resultados.append(resultado[conjunto])
+
+    if eh_o_primeiro:
+        w.writerow(colunas)
+
+    w.writerow(resultados)
     f.close()
 
 def salvar_dados_em_um_novo_arquivo(

@@ -16,7 +16,7 @@ if os.path.isfile("resultados.csv"):
 
 questao = "1) Relatório Educação: Informar nome, data de nascimento e id dos cidadãos de XPTO que frequentaram a escola, menos os cidadãos que tiveram dengue."
 resultado = pegar_relatorio_educacao()
-salvar_resultados_em_um_novo_arquivo(questao, resultado)
+salvar_resultados_em_um_novo_arquivo(questao, resultado, True)
 
 questao = "2) Relatório Saúde: Informar nome, data de nascimento e data que tiveram dengue dos cidadãos de XPTO que frequentaram o posto de saúde, menos os cidadãos que não utilizam ônibus."
 resultado = pegar_relatorio_saude()
