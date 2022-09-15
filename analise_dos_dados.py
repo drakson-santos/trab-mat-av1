@@ -2,6 +2,26 @@ from banco_de_dados import pegar_dados, salvar_dados_em_um_novo_arquivo
 
 CONJUNTOS_DOS_IDS, BANCO_DE_DADOS = pegar_dados()
 
+print("**CONJUNTOS")
+conjunto_alunos = len(CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+conjunto_dengue = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["onibus"])
+conjunto_onibus = len(CONJUNTOS_DOS_IDS["onibus"] - CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["dengue"])
+
+print("Conjunto Alunos: ", conjunto_alunos)
+print("Conjunto Dengue: ", conjunto_dengue)
+print("Conjunto Onibus: ", conjunto_onibus)
+
+print("** Intercessão")
+alunos_n_dengue = len(CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["dengue"])
+alunos_n_onibus = len(CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["onibus"])
+onibus_n_dengue = len(CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["dengue"])
+alunos_n_onibus_n_dengue = len(CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+print("Alunos n Dengue", alunos_n_dengue)
+print("Alunos n Onibus", alunos_n_onibus)
+print("Onibus n Dengue", onibus_n_dengue)
+print("Alunos n Onibus n Dengue", alunos_n_onibus_n_dengue)
+
 def pegar_dados_da_pessoas(nome_do_conjunto, ids, colunas=[]):
     dados = []
     for id in ids:
@@ -33,11 +53,6 @@ def pegar_relatorio_educacao():
         dados
     )
 
-    conA = len(CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["dengue"])
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"])
-    interAD = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["alunos"])
-
-    print("Conjunto alunos", conA)
     return {
         "Resultado": len(dados)
     }
@@ -56,15 +71,8 @@ def pegar_relatorio_saude():
         dados
     )
 
-    conD = len(resultado_ids)
-    conO = len(CONJUNTOS_DOS_IDS["onibus"] - CONJUNTOS_DOS_IDS["dengue"])
-    interDO = len(CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["dengue"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto alunos": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_mobilidade():
@@ -72,7 +80,7 @@ def pegar_relatorio_mobilidade():
     # XPTO que utilizaram o transporte público e não tiveram dengue.
 
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Ônibus"]
-    resultado_ids = ( CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["onibus"] ) - CONJUNTOS_DOS_IDS["dengue"]
+    resultado_ids = CONJUNTOS_DOS_IDS["onibus"] - CONJUNTOS_DOS_IDS["dengue"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -81,15 +89,8 @@ def pegar_relatorio_mobilidade():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_educacao_e_saude():
@@ -97,7 +98,7 @@ def pegar_relatorio_educacao_e_saude():
     # dos cidadãos de XPTO que frequentaram a escola e tiveram dengue.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue"]
 
-    resultado_ids = CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["dengue"]
+    resultado_ids = CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["dengue"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -106,15 +107,8 @@ def pegar_relatorio_educacao_e_saude():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_educacao_e_mobilidade():
@@ -122,7 +116,7 @@ def pegar_relatorio_educacao_e_mobilidade():
     # ônibus dos cidadãos de XPTO que frequentaram a escola e utilizaram transporte público.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Ônibus"]
 
-    resultado_ids = CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["onibus"]
+    resultado_ids = CONJUNTOS_DOS_IDS["alunos"] & CONJUNTOS_DOS_IDS["onibus"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -131,15 +125,8 @@ def pegar_relatorio_educacao_e_mobilidade():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude_e_mobilidade():
@@ -147,7 +134,7 @@ def pegar_relatorio_saude_e_mobilidade():
     # linhas de ônibus dos cidadãos de XPTO que frequentaram o posto de saúde e utilizaram transporte público.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue", "Ônibus"]
 
-    resultado_ids = CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"]
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -156,15 +143,8 @@ def pegar_relatorio_saude_e_mobilidade():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude_mobilidade_e_educacao():
@@ -173,7 +153,7 @@ def pegar_relatorio_saude_mobilidade_e_educacao():
     # utilizaram transporte público e frequentaram a escola.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue", "Ônibus"]
 
-    resultado_ids = CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["alunos"]
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["alunos"]
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
         "relatorio_saude_mobilidade_e_educacao",
@@ -181,15 +161,8 @@ def pegar_relatorio_saude_mobilidade_e_educacao():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude_n_mobilidade():
@@ -197,7 +170,7 @@ def pegar_relatorio_saude_n_mobilidade():
     # frequentaram o posto de saúde, mas não utilizaram transporte público.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue"]
 
-    resultado_ids = ( CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] ) - CONJUNTOS_DOS_IDS["onibus"]
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -206,22 +179,15 @@ def pegar_relatorio_saude_n_mobilidade():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude_n_educacao():
     # 9) Informar nome, data de nascimento, data que tiveram dengue dos cidadãos de XPTO
     # que frequentaram o posto de saúde, mas não frequentaram a escola.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue"]
-    resultado_ids = ( CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] ) - CONJUNTOS_DOS_IDS["alunos"]
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -230,15 +196,8 @@ def pegar_relatorio_saude_n_educacao():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude_n_educacao_n_mobilidade():
@@ -246,7 +205,7 @@ def pegar_relatorio_saude_n_educacao_n_mobilidade():
     # mas não frequentaram a escola, nem utilizaram transporte público.
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue"]
 
-    resultado_ids = ( ( ( CONJUNTOS_DOS_IDS["universo"] & CONJUNTOS_DOS_IDS["dengue"] ) - CONJUNTOS_DOS_IDS["alunos"] ) - CONJUNTOS_DOS_IDS["onibus"] )
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["onibus"]
 
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
@@ -255,13 +214,6 @@ def pegar_relatorio_saude_n_educacao_n_mobilidade():
         dados
     )
 
-    conO = len(resultado_ids)
-    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
-    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
-
     return {
-        "Resultado": len(dados),
-        "Conjunto dengue": conD,
-        "Conjunto onibus": conO,
-        "Conjunto inter": interDO,
+        "Resultado": len(dados)
     }
