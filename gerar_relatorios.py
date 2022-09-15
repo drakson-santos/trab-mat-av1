@@ -1,3 +1,5 @@
+
+import os
 from banco_de_dados import salvar_resultados_em_um_novo_arquivo
 from analise_dos_dados import pegar_relatorio_educacao,\
 pegar_relatorio_saude, \
@@ -10,9 +12,9 @@ pegar_relatorio_saude_n_mobilidade, \
 pegar_relatorio_saude_n_educacao, \
 pegar_relatorio_saude_n_educacao_n_mobilidade
 
-import os
 if os.path.isfile("resultados.csv"):
     os.remove("resultados.csv")
+
 
 questao = "1) Relatório Educação: Informar nome, data de nascimento e id dos cidadãos de XPTO que frequentaram a escola, menos os cidadãos que tiveram dengue."
 resultado = pegar_relatorio_educacao()

@@ -25,8 +25,8 @@ def pegar_relatorio_educacao():
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento"]
 
     resultado_ids = CONJUNTOS_DOS_IDS["alunos"] - CONJUNTOS_DOS_IDS["dengue"]
-    dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
 
+    dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
         "relatorio_educacao",
         colunas_solicitadas,
@@ -48,8 +48,8 @@ def pegar_relatorio_saude():
     # de XPTO que frequentaram o posto de saúde, menos os cidadãos que não utilizam ônibus.
 
     colunas_solicitadas = ["ID", "Nome", "Data de Nascimento", "Data da Dengue"]
-    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"]
 
+    resultado_ids = CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"]
     dados = pegar_dados_da_pessoas("universo", resultado_ids, colunas_solicitadas)
     salvar_dados_em_um_novo_arquivo(
         "relatorio_saude",
@@ -62,7 +62,7 @@ def pegar_relatorio_saude():
     interDO = len(CONJUNTOS_DOS_IDS["onibus"] & CONJUNTOS_DOS_IDS["dengue"])
 
     return {
-        "Conjunto dengue": conD,
+        "Conjunto alunos": conD,
         "Conjunto onibus": conO,
         "Conjunto inter": interDO,
     }
@@ -81,7 +81,15 @@ def pegar_relatorio_mobilidade():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_educacao_e_saude():
     # 4) Relatório Educação e Saúde: Informar nome, data de nascimento, id e data que tiveram dengue
@@ -97,7 +105,15 @@ def pegar_relatorio_educacao_e_saude():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_educacao_e_mobilidade():
     # 5) Relatório Educação e Mobilidade: Informar nome, data de nascimento, id e linhas de
@@ -113,7 +129,15 @@ def pegar_relatorio_educacao_e_mobilidade():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_saude_e_mobilidade():
     # # 6) Relatório Saúde e Mobilidade: Informar nome, data de nascimento, data que tiveram dengue e
@@ -129,7 +153,15 @@ def pegar_relatorio_saude_e_mobilidade():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_saude_mobilidade_e_educacao():
     # 7) Relatório Saúde, Mobilidade e Educação: Informar nome, data de nascimento, data que
@@ -145,7 +177,15 @@ def pegar_relatorio_saude_mobilidade_e_educacao():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_saude_n_mobilidade():
     # 8) Informar nome, data de nascimento, data que tiveram dengue dos cidadãos de XPTO que
@@ -161,7 +201,15 @@ def pegar_relatorio_saude_n_mobilidade():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_saude_n_educacao():
     # 9) Informar nome, data de nascimento, data que tiveram dengue dos cidadãos de XPTO
@@ -176,7 +224,15 @@ def pegar_relatorio_saude_n_educacao():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
 
 def pegar_relatorio_saude_n_educacao_n_mobilidade():
     # 10) Informar nome, data de nascimento, data que tiveram dengue dos cidadãos de XPTO que frequentaram o posto de saúde,
@@ -191,4 +247,12 @@ def pegar_relatorio_saude_n_educacao_n_mobilidade():
         dados
     )
 
-    return len(dados)
+    conO = len(resultado_ids)
+    conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["onibus"])
+    interDO = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["onibus"])
+
+    return {
+        "Conjunto dengue": conD,
+        "Conjunto onibus": conO,
+        "Conjunto inter": interDO,
+    }
