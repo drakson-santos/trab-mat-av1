@@ -37,11 +37,9 @@ def pegar_relatorio_educacao():
     conD = len(CONJUNTOS_DOS_IDS["dengue"] - CONJUNTOS_DOS_IDS["alunos"])
     interAD = len(CONJUNTOS_DOS_IDS["dengue"] & CONJUNTOS_DOS_IDS["alunos"])
 
+    print("Conjunto alunos", conA)
     return {
-        "Resultado": len(dados),
-        "Conjunto alunos": conA,
-        "Conjunto dengue": conD,
-        "Conjunto inter": interAD,
+        "Resultado": len(dados)
     }
 
 def pegar_relatorio_saude():
